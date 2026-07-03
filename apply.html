@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apply — Gravitas Founding Members Program 2026</title>
+<meta name="description" content="Apply for the Gravitas Founding Members Program. Complete your details, choose your asset, and e-sign your NDA and indemnity form.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sacramento&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* ── Apply-page specific styles ─────────────────────── */
+  .apply-shell{max-width:720px;margin:0 auto;padding:48px 24px 100px}
+  .apply-head{text-align:center;margin-bottom:36px}
+  .apply-head h1{font-size:clamp(26px,4vw,34px);font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:10px}
+  .apply-head p{color:var(--ink-mid);font-size:14.5px}
+
+  /* progress */
+  .progress-wrap{margin-bottom:44px}
+  .progress-track{height:4px;background:var(--panel-line);border-radius:100px;overflow:hidden;margin-bottom:14px}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--green));border-radius:100px;transition:width .35s ease;width:20%}
+  .progress-steps{display:flex;justify-content:space-between}
+  .progress-step{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-faint);text-align:center;flex:1}
+  .progress-step.active{color:var(--green-soft)}
+  .progress-step.done{color:var(--ink-mid)}
+
+  .form-card{background:var(--panel);border:1px solid var(--panel-line);border-radius:var(--r-xl);padding:36px}
+  .step-panel{display:none}
+  .step-panel.active{display:block;animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .step-title{font-size:20px;font-family:'Space Grotesk',sans-serif;font-weight:600;margin-bottom:6px}
+  .step-desc{color:var(--ink-mid);font-size:14px;margin-bottom:28px;line-height:1.6}
+
+  /* form fields */
+  .field{margin-bottom:20px}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:7px}
+  .field .hint{font-size:12px;color:var(--ink-faint);margin-top:5px}
+  .field input[type=text],.field input[type=email],.field input[type=tel],.field select{
+    width:100%;padding:12px 14px;background:var(--panel-raised);border:1px solid var(--panel-line-strong);
+    border-radius:var(--r-sm);color:var(--ink);font-size:14.5px;font-family:'Inter',sans-serif;transition:border-color .18s;
+  }
+  .field input:focus,.field select:focus{border-color:var(--blue);outline:none}
+  .field input.error,.field select.error{border-color:#FF5D5D}
+  .error-msg{color:#FF8080;font-size:12px;margin-top:5px;display:none}
+  .field.has-error .error-msg{display:block}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-top:6px}
+  .checkbox-row input{margin-top:3px;width:16px;height:16px;accent-color:var(--green)}
+  .checkbox-row label{font-size:13px;color:var(--ink-mid);line-height:1.6}
+
+  /* asset selection */
+  .asset-option{display:flex;align-items:flex-start;gap:16px;padding:20px;background:var(--panel-raised);border:1.5px solid var(--panel-line-strong);border-radius:var(--r-md);margin-bottom:14px;cursor:pointer;transition:border-color .18s,background .18s}
+  .asset-option:hover{border-color:var(--panel-line-strong)}
+  .asset-option.checked{border-color:var(--green);background:var(--green-dim)}
+  .asset-option input{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex-shrink:0}
+  .asset-option .info{flex:1}
+  .asset-option .info h5{font-size:15.5px;color:var(--ink);margin-bottom:4px}
+  .asset-option .info p{font-size:13px;color:var(--ink-mid);line-height:1.55}
+  .asset-option .price{font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--green-soft);font-weight:500;white-space:nowrap}
+  .asset-option .price small{display:block;font-size:10.5px;color:var(--ink-faint);font-weight:400;margin-top:2px}
+  .total-bar{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;background:var(--panel-raised);border-radius:var(--r-md);border:1px solid var(--panel-line-strong);margin-top:6px}
+  .total-bar .l{font-size:13px;color:var(--ink-mid)}
+  .total-bar .v{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--ink);font-weight:600}
+  .total-bar .v small{font-size:12px;color:var(--ink-faint);font-weight:400}
+
+  /* document review box */
+  .doc-box{background:var(--panel-raised);border:1px solid var(--panel-line-strong);border-radius:var(--r-md);padding:22px;margin-bottom:22px;max-height:220px;overflow-y:auto}
+  .doc-box h6{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);margin-bottom:10px;font-family:'JetBrains Mono',monospace}
+  .doc-box p{font-size:13px;color:var(--ink-mid);line-height:1.7;margin-bottom:8px}
+  .doc-box ol{margin-left:18px;color:var(--ink-mid);font-size:13px;line-height:1.8}
+  .doc-download{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;background:var(--blue-dim);border:1px solid rgba(46,142,255,.3);border-radius:var(--r-md);margin-bottom:22px}
+  .doc-download .l{display:flex;align-items:center;gap:10px;font-size:13.5px;color:var(--ink)}
+
+  /* signature pad */
+  .sig-wrap{margin-bottom:22px}
+  .sig-wrap label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px}
+  .sig-pad-box{background:#fff;border-radius:var(--r-md);border:1.5px solid var(--panel-line-strong);position:relative;touch-action:none}
+  .sig-pad-box canvas{display:block;width:100%;height:150px;cursor:crosshair;border-radius:var(--r-md)}
+  .sig-baseline{position:absolute;left:20px;right:20px;bottom:34px;border-bottom:1px dashed #C7D2DE;pointer-events:none}
+  .sig-placeholder{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:#B7C2CE;font-size:14px;pointer-events:none;font-family:'Inter',sans-serif}
+  .sig-tools{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+  .sig-tools .hint{font-size:11.5px;color:var(--ink-faint)}
+
+  /* nav buttons */
+  .step-nav{display:flex;justify-content:space-between;align-items:center;margin-top:32px;padding-top:24px;border-top:1px solid var(--panel-line)}
+
+  /* review summary */
+  .review-block{background:var(--panel-raised);border:1px solid var(--panel-line-strong);border-radius:var(--r-md);padding:20px 22px;margin-bottom:16px}
+  .review-block h6{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);margin-bottom:12px;font-family:'JetBrains Mono',monospace}
+  .review-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--panel-line);font-size:13.5px}
+  .review-row:last-child{border-bottom:none}
+  .review-row .k{color:var(--ink-mid)}
+  .review-row .v{color:var(--ink);font-weight:500;text-align:right}
+
+  /* confirmation */
+  .confirm-wrap{text-align:center;padding:20px 0}
+  .confirm-icon{width:64px;height:64px;border-radius:50%;background:var(--green-dim);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;color:var(--green-soft)}
+  .confirm-icon svg{width:30px;height:30px}
+  .confirm-wrap h2{font-size:24px;margin-bottom:10px}
+  .confirm-wrap p{color:var(--ink-mid);font-size:14.5px;line-height:1.7;max-width:440px;margin:0 auto}
+  .confirm-ref{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--ink-faint);margin-top:20px;padding:12px;background:var(--panel-raised);border-radius:var(--r-sm);display:inline-block}
+
+  @media(max-width:600px){
+    .field-row{grid-template-columns:1fr}
+    .form-card{padding:24px}
+    .asset-option{flex-direction:column}
+    .asset-option .price{align-self:flex-end;margin-top:-30px}
+    .progress-step{font-size:8.5px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">G</span>
+      <span>Gravitas<span class="brand-sub">Founding Members · 2026</span></span>
+    </a>
+    <div class="nav-ctas">
+      <a href="index.html" class="btn btn-ghost btn-sm">← Back to overview</a>
+    </div>
+  </div>
+</nav>
+<div class="seam"></div>
+
+<main class="apply-shell">
+  <div class="apply-head">
+    <h1>Founding Member Application</h1>
+    <p>Five short steps. Your NDA and indemnity form are e-signed right here — no separate emails to chase.</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-steps">
+      <div class="progress-step active" data-step-label="1">Your Details</div>
+      <div class="progress-step" data-step-label="2">Allocation</div>
+      <div class="progress-step" data-step-label="3">NDA</div>
+      <div class="progress-step" data-step-label="4">Indemnity</div>
+      <div class="progress-step" data-step-label="5">Review</div>
+    </div>
+  </div>
+
+  <form class="form-card" id="applyForm" novalidate>
+
+    <!-- ═══ STEP 1 — YOUR DETAILS ═══ -->
+    <div class="step-panel active" data-step="1">
+      <div class="step-title">Your details</div>
+      <p class="step-desc">We'll use this to prepare your Founding Members Charter, Equity Governance Protocol, and payment link.</p>
+
+      <div class="field">
+        <label for="fullName">Full legal name</label>
+        <input type="text" id="fullName" name="fullName" placeholder="e.g. Thandiwe Nkosi" autocomplete="name" required>
+        <div class="error-msg">Please enter your full legal name.</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <div class="error-msg">Please enter a valid email address.</div>
+        </div>
+        <div class="field">
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+27 60 000 0000" autocomplete="tel" required>
+          <div class="error-msg">Please enter a valid phone number.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="country">Country of residence</label>
+        <select id="country" name="country" required>
+          <option value="" disabled selected>Select your country</option>
+          <option>South Africa</option>
+          <option>eSwatini</option>
+          <option>Botswana</option>
+          <option>Nigeria</option>
+          <option>Ghana</option>
+          <option>Kenya</option>
+          <option>United Arab Emirates</option>
+          <option>United Kingdom</option>
+          <option>Ireland</option>
+          <option>Australia</option>
+          <option>Canada</option>
+          <option>United States</option>
+          <option>Other</option>
+        </select>
+        <div class="error-msg">Please select your country of residence.</div>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="ageConfirm" name="ageConfirm" required>
+        <label for="ageConfirm">I confirm that I am 18 years of age or older and am legally permitted to enter into an equity subscription in my jurisdiction.</label>
+      </div>
+      <div class="error-msg" id="ageConfirmError" style="margin-top:6px">You must confirm you are 18 or older to continue.</div>
+
+      <div class="step-nav">
+        <span></span>
+        <button type="button" class="btn btn-primary" data-next>Continue →</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 2 — ALLOCATION ═══ -->
+    <div class="step-panel" data-step="2">
+      <div class="step-title">Choose your allocation</div>
+      <p class="step-desc">Select one or both assets. Your seat price is fixed regardless of which combination you choose.</p>
+
+      <label class="asset-option" id="optJobbyist">
+        <input type="checkbox" name="asset" value="jobbyist">
+        <div class="info">
+          <h5>Jobbyist Africa</h5>
+          <p>AI-assisted job discovery &amp; career platform · 3% pooled equity</p>
+        </div>
+        <div class="price">$250<small>≈ R4,125</small></div>
+      </label>
+
+      <label class="asset-option" id="optSkinlabs">
+        <input type="checkbox" name="asset" value="skinlabs">
+        <div class="info">
+          <h5>SkinLabs® South Africa</h5>
+          <p>AI-powered skin diagnostics &amp; personalised skincare · 5% pooled equity</p>
+        </div>
+        <div class="price">$125<small>≈ R2,063</small></div>
+      </label>
+
+      <div class="total-bar">
+        <span class="l">Total fixed bid amount</span>
+        <span class="v" id="totalBid">$0<small> · select an asset above</small></span>
+      </div>
+      <div class="error-msg" id="assetError" style="margin-top:10px">Please select at least one asset to continue.</div>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-outline" data-prev>← Back</button>
+        <button type="button" class="btn btn-primary" data-next>Continue →</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 3 — NDA ═══ -->
+    <div class="step-panel" data-step="3">
+      <div class="step-title">Non-Disclosure Agreement</div>
+      <p class="step-desc">Review the summary below, download the full NDA for your records, then sign to continue.</p>
+
+      <div class="doc-box">
+        <h6>Summary of key terms</h6>
+        <p>By signing, you agree to keep confidential all information shared as part of this application — including the Founding Members Charter, Equity Governance Protocol, financial projections, and any other materials relating to Jobbyist Africa or SkinLabs® South Africa.</p>
+        <ol>
+          <li>You will not disclose confidential materials to any third party without written consent.</li>
+          <li>You will use confidential information solely to evaluate your Founding Member application.</li>
+          <li>These obligations survive whether or not your application is ultimately approved or funded.</li>
+          <li>Exact terms may vary slightly depending on your jurisdiction and selected asset(s) — the full text governs.</li>
+        </ol>
+      </div>
+
+      <div class="doc-download">
+        <span class="l">📄 Non-Disclosure-Agreement.pdf</span>
+        <a href="docs/NDA.pdf" download class="btn btn-ghost btn-sm">↓ Download PDF</a>
+      </div>
+
+      <div class="sig-wrap">
+        <label>Sign here to accept the NDA</label>
+        <div class="sig-pad-box">
+          <span class="sig-placeholder" data-placeholder-for="ndaCanvas">Draw your signature</span>
+          <span class="sig-baseline"></span>
+          <canvas id="ndaCanvas"></canvas>
+        </div>
+        <div class="sig-tools">
+          <span class="hint">Use your mouse, trackpad, or finger on touch devices.</span>
+          <button type="button" class="btn btn-outline btn-sm" data-clear-sig="ndaCanvas">Clear</button>
+        </div>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="ndaAgree" name="ndaAgree" required>
+        <label for="ndaAgree">I have read and agree to the full Non-Disclosure Agreement (available above), and confirm that the signature above is my own.</label>
+      </div>
+      <div class="error-msg" id="ndaError" style="margin-top:6px">Please sign and confirm your agreement to the NDA before continuing.</div>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-outline" data-prev>← Back</button>
+        <button type="button" class="btn btn-primary" data-next>Continue →</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 4 — INDEMNITY ═══ -->
+    <div class="step-panel" data-step="4">
+      <div class="step-title">Indemnity &amp; risk acknowledgement</div>
+      <p class="step-desc">This confirms you understand the risks and are bidding at your own discretion. Review, download, and sign below.</p>
+
+      <div class="doc-box">
+        <h6>Summary of key terms</h6>
+        <p>By signing, you absolve Gravitas Industries (Pty) Ltd and its stakeholders from liability in the event of loss of funds or liquidation following approval of your bid and allocation of equity.</p>
+        <ol>
+          <li>Your decision to bid is made willingly, in your sole discretion, with no guarantee of returns.</li>
+          <li>You acknowledge that early-stage investments are high-risk and you may lose your entire contribution.</li>
+          <li>Full risk factors are detailed in the Equity Agreement, delivered by courier and email for review and signature once your bid is accepted.</li>
+          <li>This indemnity does not waive any rights that cannot be lawfully waived under South African law.</li>
+        </ol>
+      </div>
+
+      <div class="doc-download">
+        <span class="l">📄 Indemnity-Form.pdf</span>
+        <a href="docs/Indemnity-Form.pdf" download class="btn btn-ghost btn-sm">↓ Download PDF</a>
+      </div>
+
+      <div class="sig-wrap">
+        <label>Sign here to accept the Indemnity Form</label>
+        <div class="sig-pad-box">
+          <span class="sig-placeholder" data-placeholder-for="indemnityCanvas">Draw your signature</span>
+          <span class="sig-baseline"></span>
+          <canvas id="indemnityCanvas"></canvas>
+        </div>
+        <div class="sig-tools">
+          <span class="hint">Use your mouse, trackpad, or finger on touch devices.</span>
+          <button type="button" class="btn btn-outline btn-sm" data-clear-sig="indemnityCanvas">Clear</button>
+        </div>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="indemnityAgree" name="indemnityAgree" required>
+        <label for="indemnityAgree">I have read and agree to the full Indemnity Form (available above), understand the risks involved, and confirm that the signature above is my own.</label>
+      </div>
+      <div class="error-msg" id="indemnityError" style="margin-top:6px">Please sign and confirm your agreement to the Indemnity Form before continuing.</div>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-outline" data-prev>← Back</button>
+        <button type="button" class="btn btn-primary" data-next>Continue →</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 5 — REVIEW & SUBMIT ═══ -->
+    <div class="step-panel" data-step="5">
+      <div class="step-title">Review &amp; submit</div>
+      <p class="step-desc">Confirm your details below. After you submit, your confidential Founding Members Charter, Equity Governance Protocol, and payment link will be sent to your email.</p>
+
+      <div class="review-block">
+        <h6>Your details</h6>
+        <div class="review-row"><span class="k">Name</span><span class="v" id="revName">—</span></div>
+        <div class="review-row"><span class="k">Email</span><span class="v" id="revEmail">—</span></div>
+        <div class="review-row"><span class="k">Phone</span><span class="v" id="revPhone">—</span></div>
+        <div class="review-row"><span class="k">Country</span><span class="v" id="revCountry">—</span></div>
+      </div>
+
+      <div class="review-block">
+        <h6>Allocation</h6>
+        <div class="review-row"><span class="k">Selected asset(s)</span><span class="v" id="revAssets">—</span></div>
+        <div class="review-row"><span class="k">Total fixed bid</span><span class="v" id="revTotal">—</span></div>
+      </div>
+
+      <div class="review-block">
+        <h6>Agreements</h6>
+        <div class="review-row"><span class="k">Non-Disclosure Agreement</span><span class="v" id="revNda">—</span></div>
+        <div class="review-row"><span class="k">Indemnity Form</span><span class="v" id="revIndemnity">—</span></div>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="finalConfirm" name="finalConfirm" required>
+        <label for="finalConfirm">I confirm the information above is accurate, and I understand this application does not guarantee acceptance or allocation of equity.</label>
+      </div>
+      <div class="error-msg" id="finalError" style="margin-top:6px">Please confirm the statement above before submitting.</div>
+
+      <div class="step-nav">
+        <button type="button" class="btn btn-outline" data-prev>← Back</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application →</button>
+      </div>
+    </div>
+
+    <!-- ═══ CONFIRMATION ═══ -->
+    <div class="step-panel" data-step="confirm">
+      <div class="confirm-wrap">
+        <div class="confirm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h2>Application received</h2>
+        <p>Thank you — your NDA and indemnity form have been recorded. Within 2 business days you'll receive your confidential Founding Members Charter, Equity Governance Protocol, supporting subscription documents, and a secure link to pay your fixed bid amount.</p>
+        <div class="confirm-ref" id="confirmRef">Reference: —</div>
+        <div class="mt-8">
+          <a href="index.html" class="btn btn-outline">← Back to overview</a>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</main>
+
+<footer style="padding-top:0">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:1px solid var(--panel-line);padding-top:24px">
+      <p class="text-faint text-xs">© 2026 Gravitas Industries (Pty) Ltd. This application does not constitute a public offer, prospectus, financial advice, tax advice or legal advice. See the <a href="https://partners.gravitas.uno/investment-memorandum-2026.pdf" target="_blank" rel="noopener" style="color:var(--blue-soft)">Investment Memorandum</a> for full terms.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/apply.js"></script>
+</body>
+</html>
